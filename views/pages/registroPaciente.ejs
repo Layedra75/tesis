@@ -1,0 +1,177 @@
+<!-- Modal de Registro de Paciente -->
+<div
+  class="modal fade"
+  id="registroModal"
+  tabindex="-1"
+  aria-labelledby="registroModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registroModalLabel">
+          <i class="ti ti-user-plus"></i> Registro de Paciente
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenido del formulario -->
+        <form action="/pacientes" method="POST" id="formRegisterPatient">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="nombre" class="form-label"
+                  ><i class="ti ti-user"></i> Nombre completo</label
+                >
+                <input
+                  id="nombre"
+                  name="nombre"
+                  type="text"
+                  class="form-control"
+                  required
+                  maxlength="150"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="apellido" class="form-label"
+                  ><i class="ti ti-user"></i> Apellido</label
+                >
+                <input
+                  id="apellido"
+                  name="apellido"
+                  type="text"
+                  class="form-control"
+                  required
+                  maxlength="150"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="cedula" class="form-label"
+                  ><i class="ti ti-id-badge"></i> Cédula</label
+                >
+                <input
+                  id="cedula"
+                  name="cedula"
+                  type="text"
+                  class="form-control"
+                  maxlength="10"
+                  minlength="7"
+                  title="La cédula debe contener al menos 10 dígitos"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="fecha_nacimiento" class="form-label"
+                  ><i class="ti ti-calendar"></i> Fecha de Nacimiento</label
+                >
+                <input
+                  id="fecha_nacimiento"
+                  name="fecha_nacimiento"
+                  type="date"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="genero" class="form-label"
+                  ><i class="fa-solid fa-venus-mars"></i> Género</label
+                >
+                <select id="genero" name="genero" class="form-select">
+                  <option value="masculino">Masculino</option>
+                  <option value="femenino">Femenino</option>
+                  <option value="otro">Otro</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="direccion" class="form-label"
+                  ><i class="ti ti-location"></i> Dirección</label
+                >
+                <input
+                  id="direccion"
+                  name="direccion"
+                  type="text"
+                  class="form-control"
+                  maxlength="255"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="telefono" class="form-label"
+                  ><i class="ti ti-device-mobile"></i> Celular</label
+                >
+                <input
+                  id="telefono"
+                  name="telefono"
+                  type="text"
+                  class="form-control"
+                  maxlength="15"
+                  minlength="10"
+                  title="El número de teléfono debe contener al menos 10 dígitos"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="correo" class="form-label"
+                  ><i class="fa-regular fa-envelope"></i> Correo
+                  Electrónico</label
+                >
+                <input
+                  id="correo"
+                  name="correo"
+                  type="email"
+                  class="form-control"
+                  maxlength="150"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          form="formRegisterPatient"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Registrar Paciente
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

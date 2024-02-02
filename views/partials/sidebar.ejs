@@ -1,0 +1,77 @@
+<% const sidebarMenu = [
+  {
+    name: 'Home',
+    isTitle: true,
+    title: 'Home',
+  },
+  {
+    name: 'Dashboard',
+    isLink: true,
+    route: '/',
+    icon: 'ti ti-layout-dashboard',
+    hideMenu: 'Dashboard',
+  },
+  {
+    name: 'Citas',
+    isLink: true,
+    route: '/citas',
+    icon: 'ti ti-layout-dashboard',
+    hideMenu: 'Citas',
+  },
+  {
+    name: 'AUTH',
+    isTitle: true,
+    title: 'AUTH',
+  },
+  {
+    name: 'Usuarios',
+    isLink: true,
+    route: 'usuarios',
+    icon: 'ti ti-user-plus',
+    hideMenu: 'Usuarios',
+  },
+  {
+    name: 'Pacientes',
+    isLink: true,
+    route: 'pacientes',
+    icon: 'ti ti-user-plus',
+    hideMenu: 'Pacientes',
+  }
+]; %>
+
+<aside class="left-sidebar">
+  <!-- Sidebar scroll-->
+  <div>
+    <div class="brand-logo d-flex align-items-center justify-content-center">
+      <a href="./" class="text-nowrap logo-img">
+          <img src="assets/images/logos/logo-navbar.png" width="150" alt="" />
+      </a>
+      <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+          <i class="ti ti-x fs-8"></i>
+      </div>
+  </div>
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+      <ul id="sidebarnav">
+        <% sidebarMenu.forEach(navLink => { %>
+          <% if (navLink.isTitle) { %>
+            <li class="nav-small-cap">
+              <span class="hide-menu"><%= navLink.title %></span>
+            </li>
+          <% } else { %>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="<%= navLink.route %>" aria-expanded="false">
+                <span>
+                  <i class="<%= navLink.icon %>"></i>
+                </span>
+                <span class="hide-menu"><%= navLink.hideMenu %></span>
+              </a>
+            </li>
+          <% } %>
+        <% }); %>
+      </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
+</aside>

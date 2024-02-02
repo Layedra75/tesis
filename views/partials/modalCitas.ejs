@@ -1,0 +1,106 @@
+<!-- Modal Creacion de Citas Medicas-->
+<div
+  class="modal fade"
+  id="myModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crear Cita Médica</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario para crear cita médica -->
+        <form id="citaForm">
+          <!-- Fecha y Hora -->
+          <div class="row">
+            <div class="col-6 mb-3">
+              <label for="event-date" class="form-label">Fecha:</label>
+              <input type="date" class="form-control" id="event-date" />
+            </div>
+            <div class="col-6 mb-3">
+              <label for="event-time" class="form-label">Hora:</label>
+              <input type="time" class="form-control" id="event-time" />
+            </div>
+          </div>
+
+          <!-- Paciente -->
+          <div class="mb-3">
+            <label for="patient" class="form-label">Paciente:</label>
+            <select id="patient" required>
+              <% pacientes.forEach(function(paciente) { %>
+              <option value="<%= paciente.id %>">
+                <%= paciente.nombre + ' ' + paciente.apellido %>
+              </option>
+              <% }); %>
+            </select>
+          </div>
+
+          <!-- Medico -->
+          <div class="mb-3">
+            <label for="doctor" class="form-label">Médico:</label>
+            <select id="doctor" required>
+              <% doctores.forEach(function(doctor) { %>
+              <option value="<%= doctor.id %>">
+                <%= doctor.name + ' ' + doctor.lastname %>
+              </option>
+              <% }); %>
+            </select>
+          </div>
+
+          <!-- Descripción -->
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripción:</label>
+            <textarea
+              class="form-control"
+              id="description"
+              rows="3"
+              placeholder="Descripción opcional"
+            ></textarea>
+          </div>
+
+          <!-- Botones -->
+          <button type="submit" class="btn btn-primary" id="guardar-cita">
+            Guardar cita
+          </button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Inicializa el Selectize -->
+<script>
+  $(document).ready(function () {
+    $('#patient').selectize({
+      valueField: 'id', // Campo que representa el valor único del elemento
+      labelField: ['nombre', 'apellido'],//Campos que se mostraran en el select
+      searchField: ['nombre', 'apellido', 'cedula'], // Campos en los que se realizará la búsqueda
+      options: [<% pacientes.forEach(function(paciente) { %>
+        { id: '<%= paciente.id %>', nombre: '<%= paciente.nombre %>', apellido: '<%= paciente.apellido %>', cedula: '<%= paciente.cedula %>' },
+      <% }); %>],
+      create: false
+    });
+
+    $("#doctor").selectize({
+      valueField: 'id', // Campo que representa el valor único del elemento
+      labelField: ['name', 'lastname'],//Campos que se mostraran en el select
+      searchField: ['name', 'lastname', 'cedula'], // Campos en los que se realizará la búsqueda
+      options: [<% doctores.forEach(function(doctor) { %>
+        { id: '<%= doctor.id %>', nombre: '<%= doctor.name %>', apellido: '<%= doctor.lastname %>', cedula: '<%= doctor.cedula %>' },
+      <% }); %>],
+      create: false
+    });
+  });
+</script>

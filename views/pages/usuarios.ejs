@@ -1,0 +1,126 @@
+<!-- views/pages/usuarios.ejs -->
+
+<div class="card">
+  <div class="card-header">
+    <h1 class="card-title">Lista de Usuarios</h1>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table" id="usuariosTable">
+        <thead>
+          <tr>
+            <th scope="col">Rol</th>
+            <th scope="col">Cédula</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Número</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% usuarios.forEach(usuario => { %>
+          <tr>
+            <td><%= usuario.rol %></td>
+            <td><%= usuario.cedula %></td>
+            <td><%= usuario.name %></td>
+            <td><%= usuario.lastname %></td>
+            <td><%= usuario.email %></td>
+            <td><%= usuario.celular %></td>
+            <td class="text-center">
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm btn-transparent dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <!-- Enlace para abrir el modal de edición -->
+                    <a
+                      class="dropdown-item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editarUsuarioModal<%= usuario.id %>"
+                    >
+                      <i class="fa-regular fa-pen-to-square"></i> Editar
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      onclick="confirmarEliminacion('<%= usuario.id %>')"
+                      ><i class="fa-regular fa-trash-can"></i> Eliminar</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          <!-- Modal de edición para este usuario -->
+          <%- include('editUser', { usuario: usuario }) %> <% }); %>
+        </tbody>
+      </table>
+    </div>
+    <!-- Modal de registro para pacientes -->
+    <%- include('registroUsuarios') %>
+
+    <!-- Boton flotante para agregar nuevo paciente -->
+    <a
+      class="btn btn-primary fixed-button rounded-circle"
+      data-bs-toggle="modal" data-bs-target="#registroModal"
+    >
+      <i class="fas fa-plus"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+      new DataTable("#usuariosTable");
+
+      function confirmarEliminacion(id) {
+        Swal.fire({
+          title: "Eliminar",
+          text: "¿Estás seguro de que quieres eliminar este usuario?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#5D87FF",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Sí, eliminarlo",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Redirige a la página de eliminación
+            window.location.href = "/eliminar-usuario/" + id;
+          }
+        });
+      }
+      // Comprueba si hay un parámetro en la URL que indica éxito y muestra la notificación
+      const urlParams = new URLSearchParams(window.location.search);
+      const exitoParam = urlParams.get("exito");
+      const exitoEditParam = urlParams.get("exitoEdit");
+
+      if (exitoParam === "true") {
+        Swal.fire({
+          title: "Éxito",
+          text: "El usuario se ha eliminado con éxito",
+          icon: "success",
+        }).then(() => {
+          // Elimina el parámetro de éxito de la URL y recarga la página
+          history.replaceState({}, document.title, window.location.pathname);
+          location.reload();
+        });
+      } else if (exitoEditParam === "true") {
+        Swal.fire({
+          title: "Éxito",
+          text: "El usuario se ha modificado con éxito",
+          icon: "success",
+        }).then(() => {
+          // Elimina el parámetro de éxitoEdit de la URL y recarga la página
+          history.replaceState({}, document.title, window.location.pathname);
+          location.reload();
+        });
+      }
+    </script>
+  </div>
+</div>

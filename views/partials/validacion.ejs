@@ -1,0 +1,38 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Validación de correo electrónico
+            var emailInput = document.getElementById('email');
+            var emailError = document.getElementById('emailError');
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                emailError.textContent = 'Correo electrónico no válido';
+                return;
+            }
+
+            // Validación de fecha de nacimiento (18 años o más)
+            var dateInput = document.getElementById('date');
+            var birthDate = new Date(dateInput.value);
+            var currentDate = new Date();
+            var age = currentDate.getFullYear() - birthDate.getFullYear();
+
+            // Si aún no ha cumplido años este año, resta uno
+            if (currentDate.getMonth() < birthDate.getMonth() || (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            var ageError = document.getElementById('ageError');
+
+            if (age < 18) {
+                ageError.textContent = 'Debes tener al menos 18 años para registrarte.';
+                return;
+            }
+
+            // Si ambas validaciones son exitosas, envía el formulario
+            form.submit();
+        });
+    });
+</script>

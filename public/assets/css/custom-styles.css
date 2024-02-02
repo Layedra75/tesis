@@ -1,0 +1,73 @@
+/* Estilos boton */
+.btn-bd-primary {
+  font-weight: 600;
+  color: #fff;
+  background-color: #215097;
+  border-color: #215097;
+}
+.btn-bd-primary:hover,
+.btn-bd-primary:active {
+  color: #fff;
+  background-color: #123f82;
+  border-color: #123f82;
+}
+.btn-bd-primary:focus {
+  box-shadow: 0 0 0 3px rgba(121, 82, 179, 0.25);
+}
+
+.text-bd-primary {
+  color: #726a7d;
+}
+
+.btn-transparent {
+  background-color: transparent;
+  border: none;
+}
+
+.fixed-button {
+  position: fixed;
+  bottom: 20px;
+  right: 15px;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+}
+
+.fixed-button i {
+  font-size: 15px;
+}
+
+/* Estilo para los botones del calendario */
+.fc-toolbar .fc-button-primary,
+.fc-toolbar .fc-button-primary:focus {
+  font-weight: 600;
+  color: #fff;
+  background-color: #5c84fc;
+  border-color: #5c84fc;
+}
+
+.fc-toolbar .fc-button-primary:hover {
+  color: #fff;
+  background-color: #5377e2;
+  border-color: #5377e2;
+}
+
+/* Estilo para las flechas de navegación del calendario */
+.fc-prev-button, .fc-next-button {
+  font-weight: 600;
+  color: #fff;
+  background-color: #5c84fc;
+  border-color: #5c84fc;
+}
+
+.fc-prev-button:hover,
+.fc-prev-button:active,
+.fc-next-button:hover,
+.fc-next-button:active {
+  color: #fff;
+  background-color: #5377e2;
+  border-color: #5377e2;
+}

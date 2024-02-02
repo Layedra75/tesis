@@ -1,0 +1,133 @@
+<!-- views/pages/usuarios.ejs -->
+
+<!-- Tabla de usuarios -->
+<div class="card">
+  <div class="card-header">
+    <!-- Titulo de la lista -->
+    <h1 class="card-title">Lista de Pacientes</h1>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <!-- Tabla para mostrar la lista de pacientes -->
+      <table class="table" id="usuariosTable">
+        <thead>
+          <tr>
+            <!-- encabezados de la tabla -->
+            <th scope="col">Cedula</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Número</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- lista de pacientes para mostrar sus detalles -->
+          <% pacientes.forEach(paciente => { %>
+          <tr>
+            <td><%= paciente.cedula %></td>
+            <td><%= paciente.nombre %></td>
+            <td><%= paciente.apellido %></td>
+            <td><%= paciente.correo %></td>
+            <td><%= paciente.telefono %></td>
+            <td class="text-center">
+              <!-- Menu desplegable con opciones de accion -->
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm btn-transparent dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <!-- Enlace para abrir el modal -->
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editarPacienteModal<%= paciente.id %>"
+                    >
+                      <i class="fa-regular fa-pen-to-square"></i> Editar
+                    </a>
+                  </li>
+                  <!-- Opcion para eliminar con confirmacion -->
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      onclick="confirmarEliminacion('<%= paciente.id %>')"
+                      ><i class="fa-regular fa-trash-can"></i> Eliminar</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          <!-- Modal de edición para este paciente -->
+          <%- include('editPatient', { paciente: paciente }) %> <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Modal de registro para pacientes -->
+    <%- include('registroPaciente') %>
+
+    <!-- Boton flotante para agregar nuevo paciente -->
+    <a
+      class="btn btn-primary fixed-button rounded-circle"
+      data-bs-toggle="modal" data-bs-target="#registroModal"
+    >
+      <i class="fas fa-plus"></i>
+    </a>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+      new DataTable("#usuariosTable");
+
+      // Funcion para confirmar la eliminacion de un paciente
+      function confirmarEliminacion(id) {
+        Swal.fire({
+          title: "Eliminar",
+          text: "¿Estás seguro de que quieres eliminar este paciente?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#5D87FF",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Sí, eliminarlo",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Redirige a la pagina de eliminacion con la cedula del paciente
+            window.location.href = "/eliminar-paciente/" + id;
+          }
+        });
+      }
+
+      // Comprueba si hay un parametro en la URL que indica exito y muestra la notificación
+      const urlParams = new URLSearchParams(window.location.search);
+      const exitoParam = urlParams.get("exito");
+      const exitoEditParam = urlParams.get("exitoEdit");
+
+      if (exitoParam === "true") {
+        Swal.fire({
+          title: "Éxito",
+          text: "El paciente se ha eliminado con éxito",
+          icon: "success",
+        }).then(() => {
+          // Elimina el parámetro de éxito de la URL y recarga la página
+          history.replaceState({}, document.title, window.location.pathname);
+          location.reload();
+        });
+      } else if (exitoEditParam === "true") {
+        Swal.fire({
+          title: "Éxito",
+          text: "El paciente se ha modificado con éxito",
+          icon: "success",
+        }).then(() => {
+          // Elimina el parámetro de éxitoEdit de la URL y recarga la página
+          history.replaceState({}, document.title, window.location.pathname);
+          location.reload();
+        });
+      }
+    </script>
+  </div>
+</div>

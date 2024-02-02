@@ -1,0 +1,44 @@
+<!-- utilFunctions.ejs -->
+
+<script>
+    async function obtenerCitas() {
+        try {
+            const response = await fetch('/obtener-citas');
+            const data = await response.json();
+
+            if (data.success) {
+                return data.data;
+            } else {
+                console.error('Error al obtener citas médicas:', data.message);
+                return [];
+            }
+        } catch (error) {
+            console.error('Error en la solicitud AJAX:', error);
+            return [];
+        }
+    }
+</script>
+
+<script>
+    function obtenerNombreApellido(selectize, id) {
+        var option = selectize.options[id];
+        var nombre = option && option.nombre ? option.nombre : "";
+        var apellido = option && option.apellido ? option.apellido : "";
+        return `${nombre} ${apellido}`;
+    }
+
+    function crearNuevoEvento(pacienteNombre, pacienteApellido, doctorNombre, doctorApellido, fecha, horaInicio, pacienteId, doctorId, descripcion) {
+        return {
+            title: `Cita con ${pacienteNombre} ${pacienteApellido}`,
+            start: `${fecha}T${horaInicio}`,
+            pacienteId: pacienteId,
+            doctorId: doctorId,
+            descripcion: descripcion,
+            extendedProps: {
+                pacienteNombre: `${pacienteNombre} ${pacienteApellido}`,
+                doctorNombre: `${doctorNombre} ${doctorApellido}`,
+                descripcion: descripcion,
+            },
+        };
+    }
+</script>

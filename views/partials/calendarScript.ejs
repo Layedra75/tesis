@@ -1,0 +1,166 @@
+<!-- calendarScript.ejs -->
+
+<script>
+    var eventosGuardados = [];
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        var eventosGuardados = await obtenerCitas();
+
+        var calendarEl = document.getElementById("calendar");
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            timeZone: "local",
+            locale: "es",
+            selectable: true,
+            editable: true,
+            slotMinTime: "08:00:00",
+            slotMaxTime: "18:00:00",
+            hiddenDays: [0, 6],
+            initialView: "dayGridMonth",
+            headerToolbar: {
+                left: "prev,next today",
+                center: "title",
+                right: "dayGridMonth,timeGridWeek,timeGridDay",
+            },
+            buttonText: {
+                today: "Hoy",
+                month: "Mes",
+                week: "Semana",
+                day: "Día",
+            },
+            events: eventosGuardados,
+            select: function (data) {
+                // Abre el modal y pasa la fecha y hora del día clickeado
+                $("#event-time").val("");
+                $("#myModal").modal("show");
+
+                var startDate = new Date(data.start);
+                var timeZoneOffset = startDate.getTimezoneOffset();
+
+                startDate.setMinutes(startDate.getMinutes() - timeZoneOffset);
+
+                var formattedDate = startDate.toISOString().slice(0, 10);
+                $("#event-date").val(formattedDate);
+                $("#event-time").val(startDate.toISOString().slice(11, 16));
+            },
+            eventDidMount: function (info) {
+                var pacienteNombre = info.event.extendedProps.pacienteNombre;
+                var doctorNombre = info.event.extendedProps.doctorNombre;
+                var descripcion = info.event.extendedProps.descripcion;
+
+                var tooltipContent = `
+                  <div style="max-width: 200px;">
+                    <div><strong>Paciente:</strong> ${pacienteNombre}</div>
+                    <div><strong>Médico:</strong> ${doctorNombre}</div>
+                    <div><strong>Motivo:</strong> ${descripcion}</div>
+                  </div>
+                `;
+
+                $(info.el).attr("data-toggle", "tooltip");
+                $(info.el).attr("title", tooltipContent);
+                $(info.el).tooltip({
+                    html: true,
+                    placement: "top",
+                    trigger: "hover",
+                    container: "body",
+                });
+            },
+        });
+
+        // Almacena los eventos después de renderizar el calendario
+        calendar.render();
+        eventosGuardados = calendar.getEvents().map(evento => ({
+            title: evento.title,
+            start: evento.start,
+            pacienteNombre: evento.extendedProps.pacienteNombre,
+            doctorNombre: evento.extendedProps.doctorNombre,
+            descripcion: evento.extendedProps.descripcion,
+        }));
+
+        // Restaura los eventos guardados si están disponibles
+        calendar.removeAllEvents();
+        calendar.addEventSource(eventosGuardados);
+
+        // Configurar el manejo del cambio de fecha y hora en el formulario
+        $("#myModal").on("show.bs.modal", function (event) {
+            var modal = $(this);
+            var currentDate = $("#event-date").val();
+            modal
+                .find("#event-time")
+                .val(currentDate + "T" + modal.find("#event-time").val());
+        });
+
+        // Manejar el envío del formulario
+        $("#myModal").on("click", "#guardar-cita", function (e) {
+            e.preventDefault();
+
+            // Capturar los valores del formulario
+            var fecha = $("#event-date").val();
+            var horaInicio = $("#event-time").val();
+            var pacienteId = $("#patient").val();
+            var doctorId = $("#doctor").val();
+            var descripcion = $("#description").val();
+
+            // Obtener el nombre y apellido del paciente
+            var pacienteSelectize = $("#patient")[0].selectize;
+            var pacienteNombre = obtenerNombreApellido(pacienteSelectize, pacienteId);
+
+            // Obtener el nombre y apellido del médico
+            var doctorSelectize = $("#doctor")[0].selectize;
+            var doctorNombre = obtenerNombreApellido(doctorSelectize, doctorId);
+
+            // Crear un nuevo evento con propiedades extendidas
+            var newEvent = crearNuevoEvento(pacienteNombre, pacienteNombre, doctorNombre, doctorNombre, fecha, horaInicio, pacienteId, doctorId, descripcion);
+
+            // Realizar la solicitud AJAX para crear la cita médica
+            $.ajax({
+                url: '/guardar-cita',
+                type: 'POST',
+                data: {
+                    fecha: fecha,
+                    horaInicio: horaInicio,
+                    pacienteId: pacienteId,
+                    doctorId: doctorId,
+                    descripcion: descripcion,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        // Cita médica creada exitosamente, cerrar el modal, etc.
+                        calendar.addEvent(newEvent);
+                        $("#myModal").modal("hide");
+
+                        // Mostrar mensaje de éxito con SweetAlert2
+                        Swal.fire({
+                            title: 'Éxito',
+                            text: 'Cita médica creada exitosamente',
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: "#5D87FF",
+                        });
+                    } else {
+                        // Mostrar mensaje de error con SweetAlert2
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.message,
+                            icon: 'error',
+                            showConfirmButton: true,
+                        });
+                    }
+                },
+                error: function (error) {
+                    // Mostrar mensaje de error con SweetAlert2
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Error en la solicitud AJAX',
+                        icon: 'error',
+                        showConfirmButton: true,
+                    });
+
+                    console.error('Error en la solicitud AJAX:', error);
+                },
+            });
+        });
+
+    });
+</script>

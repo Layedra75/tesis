@@ -1,0 +1,161 @@
+<!-- Modal de Registro de Usuarios -->
+<div
+  class="modal fade"
+  id="registroModal"
+  tabindex="-1"
+  aria-labelledby="registroModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="registroModalLabel">
+          <i class="ti ti-user-plus"></i> Registro de Usuarios
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Contenido del formulario -->
+        <form action="/usuarios" method="POST" id="formRegister">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="name" class="form-label"
+                ><i class="ti ti-user"></i>Nombre completo</label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  aria-describedby="emailHelp"
+                  required
+                  maxlength="55"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="lastname" class="form-label"
+                ><i class="ti ti-user"></i>Apellido</label>
+                <input
+                  id="lastname"
+                  name="lastname"
+                  type="text"
+                  class="form-control"
+                  required
+                  maxlength="55"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label
+                  for="rol"
+                  class="form-label"
+                  ><i class="fa-solid fa-shield-halved"></i> Rol</label
+                >
+                <select id="rol" name="rol" class="form-select">
+                  <option value="admin">Administrador</option>
+                  <option value="doctor">Doctor</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="cedula" class="form-label"><i class="ti ti-id-badge"></i> Cédula</label>
+                <input
+                  id="cedula"
+                  name="cedula"
+                  type="text"
+                  class="form-control"
+                  maxlength="10"
+                  minlength="7"
+                  title="La cédula debe contener al menos 10 dígitos"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="date" class="form-label"><i class="ti ti-calendar"></i> Fecha de Nacimiento</label>
+                <input
+                  id="date"
+                  name="date"
+                  type="date"
+                  class="form-control"
+                  required
+                />
+                <p id="ageError" class="text-danger"></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="email" class="form-label"><i class="fa-regular fa-envelope"></i> Email</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  class="form-control"
+                  maxlength="150"
+                  required
+                />
+                <p id="emailError" class="text-danger"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="celular" class="form-label"><i class="ti ti-device-mobile"></i> Celular</label>
+                <input
+                  id="celular"
+                  name="celular"
+                  type="text"
+                  class="form-control"
+                  maxlength="15"
+                  minlength="10"
+                  title="El número de celular debe contener al menos 10 dígitos"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="pass" class="form-label"><i class="ti ti-lock"></i> Contraseña</label>
+                <input
+                  id="pass"
+                  name="pass"
+                  type="password"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button form="formRegister" type="submit" class="btn btn-primary">
+          Registrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
