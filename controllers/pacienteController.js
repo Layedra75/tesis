@@ -1,6 +1,6 @@
 const conexion = require('../database/db');
 
-//Metodo para listar pacientes
+// Metodo para listar pacientes
 const obtenerListaPacientes = (callback) => {
     const sql = 'SELECT id, nombre, apellido, cedula, correo, telefono FROM Pacientes';
     conexion.query(sql, (error, results) => {
@@ -8,10 +8,12 @@ const obtenerListaPacientes = (callback) => {
             console.error('Error al obtener la lista de pacientes:', error);
             callback('Error al obtener la lista de pacientes', null);
         } else {
-            callback(null, results);
+            const numeroPacientes = results.length; 
+            callback(null, results, numeroPacientes); 
         }
     });
 };
+
 
 //Metodo para eliminar pacientes
 const deletePatient = async (req, res) => {

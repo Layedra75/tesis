@@ -98,4 +98,19 @@ const editarUsuario = (req, res) => {
     }
 };
 
-module.exports = { obtenerListaUsuarios, eliminarUsuario, editarUsuario };
+// Método para obtener la cantidad total de usuarios
+const obtenerTotalUsuarios = (callback) => {
+    const sql = 'SELECT COUNT(*) AS numero_total_de_usuarios FROM users';
+
+    conexion.query(sql, (error, results) => {
+        if (error) {
+            console.error('Error al obtener el número total de usuarios:', error);
+            callback('Error al obtener el número total de usuarios', null);
+        } else {
+            const numeroTotalDeUsuarios = results[0].numero_total_de_usuarios;
+            callback(null, numeroTotalDeUsuarios);
+        }
+    });
+};
+
+module.exports = { obtenerListaUsuarios, eliminarUsuario, editarUsuario, obtenerTotalUsuarios };

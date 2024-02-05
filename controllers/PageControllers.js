@@ -1,9 +1,37 @@
 const usuarioController = require("./UserController");
 const pacienteController = require("./pacienteController");
+const citasController = require("./citasController")
 
-//Vista principal
+// Vista principal
 const vistaPrincipal = (req, res) => {
-  res.render("pages/dashboard", { alert: false });
+  pacienteController.obtenerListaPacientes((errorPacientes, pacientes, numeroPacientes) => {
+    if (errorPacientes) {
+      console.error("Error al obtener la lista de pacientes:", errorPacientes);
+      res.status(500).send("Error al obtener la lista de pacientes");
+    } else {
+      citasController.obtenerTotalCitasMedicas((errorCitas, numeroTotalDeCitas) => {
+        if (errorCitas) {
+          console.error("Error al obtener el número total de citas médicas:", errorCitas);
+          res.status(500).send("Error al obtener el número total de citas médicas");
+        } else {
+          usuarioController.obtenerTotalUsuarios((errorUsuarios, numeroTotalDeUsuarios) => {
+            if (errorUsuarios) {
+              console.error("Error al obtener el número total de usuarios:", errorUsuarios);
+              res.status(500).send("Error al obtener el número total de usuarios");
+            } else {
+              res.render("pages/dashboard", {
+                pacientes,
+                numeroPacientes,
+                numeroTotalDeCitas,
+                numeroTotalDeUsuarios,
+                alert: false
+              });
+            }
+          });
+        }
+      });
+    }
+  });
 };
 
 //Vista Citas Medicas

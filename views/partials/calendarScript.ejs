@@ -16,6 +16,7 @@
             editable: true,
             slotMinTime: "08:00:00",
             slotMaxTime: "18:00:00",
+            allDaySlot: false,
             hiddenDays: [0, 6],
             initialView: "dayGridMonth",
             headerToolbar: {
@@ -66,6 +67,10 @@
                     container: "body",
                 });
             },
+            validRange: {
+                start: new Date(), 
+                end: null 
+              }
         });
 
         // Almacena los eventos después de renderizar el calendario

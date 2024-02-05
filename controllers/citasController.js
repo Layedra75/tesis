@@ -37,8 +37,6 @@ const obtenerCitasMedicas = (req, res) => {
   });
 };
 
-
-
 // Método para guardar citas médicas
 const crearCitaMedica = (req, res) => {
   try {
@@ -60,5 +58,17 @@ const crearCitaMedica = (req, res) => {
   }
 };
 
-module.exports = { crearCitaMedica, obtenerCitasMedicas };
+const obtenerTotalCitasMedicas = (callback) => {
+  const sql = 'SELECT COUNT(*) AS numero_total_de_citas FROM citasmedicas';
 
+  conexion.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error al obtener el número total de citas médicas:', error);
+      callback('Error al obtener el número total de citas médicas', null);
+    } else {
+      const numeroTotalDeCitas = results[0].numero_total_de_citas;
+      callback(null, numeroTotalDeCitas);
+    }
+  });
+};
+module.exports = { crearCitaMedica, obtenerCitasMedicas, obtenerTotalCitasMedicas };
