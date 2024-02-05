@@ -1,49 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
     <title>Login</title>
-    <link rel="shortcut icon" type="image/png" href="assets/images/logos/favicon.png" />
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/signin.css" rel="stylesheet">
-    <link href="assets/css/custom-styles.css" rel="stylesheet">
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="assets/images/logos/favicon.png"
+    />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/css/signin.css" rel="stylesheet" />
+    <link href="assets/css/custom-styles.css" rel="stylesheet" />
   </head>
-  <body class="text-center">
-    
-<main class="form-signin text-center shadow-lg rounded-top p-3 mb-5">
+  <body
+    class="text-center"
+    style="
+      background-image: url('assets/images/logos/fondo.png');
+      background-size: cover;
+      background-position: center;
+    "
+  >
+    <main
+      class="form-signin text-center shadow-lg bg-light p-3 mb-5"
+      style="border-radius: 10px"
+    >
+      <form id="formLogin" action="/login" method="POST">
+        <img
+          class="mb-4"
+          src="assets/images/logos/logo.png"
+          alt=""
+          width="220"
+          height="auto"
+        />
 
-  <form id="formLogin" action="/login" method="POST">
-    <img class="mb-4" src="assets/images/logos/logo.png" alt="" width="250" height="auto">
-    
-    <div class="form-floating">
-      <input type="email" class="form-control" id="email" name="email" placeholder="Email">
-      <label for="email">Email</label>
-    </div>
+        <div class="form-floating">
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Email"
+          />
+          <label for="email">Email</label>
+        </div>
 
-    <div class="form-floating mt-2">
-      <input type="password" class="form-control" id="pass" name="pass" placeholder="Password">
-      <label for="pass">Password</label>
-    </div>
+        <div class="form-floating mt-2">
+          <input
+            type="password"
+            class="form-control"
+            id="pass"
+            name="pass"
+            placeholder="Password"
+          />
+          <label for="pass">Password</label>
+        </div>
 
-    <button class="w-100 btn btn-lg btn-bd-primary" type="submit">Login</button>    
-  </form>
-</main>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<% if(alert) { %>
-  <script>
-    Swal.fire({
-      title: '<%= alertTitle %>',
-      text:'<%= alertMessage %>',
-      icon:'<%= alertIcon %>',
-      showConfirmButton: <%= showConfirmButton %>,
-      timer: <%= timer %>
-    }).then(()=>{
-      window.location = '/<%= ruta %>'
-    })
-  </script>
-<% } %>
-
+        <button class="w-100 btn btn-lg btn-bd-primary" type="submit">
+          Login
+        </button>
+      </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <% if(alert) { %>
+    <script>
+      Swal.fire({
+        title: '<%= alertTitle %>',
+        text:'<%= alertMessage %>',
+        icon:'<%= alertIcon %>',
+        showConfirmButton: <%= showConfirmButton %>,
+        timer: <%= timer %>
+      }).then(()=>{
+        window.location = '/<%= ruta %>'
+      })
+    </script>
+    <% } %>
   </body>
 </html>
