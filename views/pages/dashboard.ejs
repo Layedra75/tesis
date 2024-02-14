@@ -42,4 +42,39 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Próximas Citas Médicas</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="proximasCitasTable">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Paciente</th>
+                                    <th>Doctor</th>
+                                    <th>Descripción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% eventos.forEach(evento => { %>
+                                <tr>
+                                    <td><%= evento.fecha %></td>
+                                    <td><%= evento.hora %></td>
+                                    <td><%= evento.pacienteNombre %></td>
+                                    <td><%= evento.doctorNombre %></td>
+                                    <td><%= evento.descripcion %></td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>

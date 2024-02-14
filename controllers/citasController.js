@@ -71,4 +71,44 @@ const obtenerTotalCitasMedicas = (callback) => {
     }
   });
 };
-module.exports = { crearCitaMedica, obtenerCitasMedicas, obtenerTotalCitasMedicas };
+
+// Método para obtener las próximas citas médicas
+const obtenerProximasCitasMedicas = (req, res) => {
+  const sql = `
+    SELECT
+        citas.id AS cita_id,
+        DATE_FORMAT(citas.fecha, '%Y-%m-%d') AS fecha,
+        citas.hora_inicio,
+        pacientes.nombre AS nombre_paciente,
+        pacientes.apellido AS apellido_paciente,
+        users.name AS nombre_doctor,
+        users.lastname AS apellido_doctor,
+        citas.descripcion
+    FROM
+        citasmedicas AS citas
+        INNER JOIN pacientes ON citas.paciente_id = pacientes.id
+        INNER JOIN users ON citas.doctor_id = users.id
+    WHERE citas.fecha >= CURDATE() AND citas.hora_inicio >= CURTIME()
+    ORDER BY citas.fecha, citas.hora_inicio
+    LIMIT 5;  -- Obtener solo las próximas 5 citas
+  `;
+
+  conexion.query(sql, (error, results) => {
+    if (error) {
+      console.error('Error al obtener próximas citas médicas:', error);
+      res.status(500).json({ success: false, message: 'Error al obtener próximas citas médicas', data: [] });
+    } else {
+      const eventos = results.map((cita) => ({
+        fecha: cita.fecha,
+        hora: cita.hora_inicio,
+        pacienteNombre: `${cita.nombre_paciente} ${cita.apellido_paciente}`,
+        doctorNombre: `${cita.nombre_doctor} ${cita.apellido_doctor}`,
+        descripcion: cita.descripcion,
+      }));
+
+      res.json({ success: true, data: eventos });
+    }
+  });
+};
+
+module.exports = { crearCitaMedica, obtenerCitasMedicas, obtenerTotalCitasMedicas, obtenerProximasCitasMedicas };

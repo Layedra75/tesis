@@ -95,8 +95,8 @@
 
     $("#doctor").selectize({
       valueField: 'id', // Campo que representa el valor único del elemento
-      labelField: ['name', 'lastname'],//Campos que se mostraran en el select
-      searchField: ['name', 'lastname', 'cedula'], // Campos en los que se realizará la búsqueda
+      labelField: ['nombre', 'apellido'],//Campos que se mostraran en el select
+      searchField: ['nombre', 'apellido', 'cedula'], // Campos en los que se realizará la búsqueda
       options: [<% doctores.forEach(function(doctor) { %>
         { id: '<%= doctor.id %>', nombre: '<%= doctor.name %>', apellido: '<%= doctor.lastname %>', cedula: '<%= doctor.cedula %>' },
       <% }); %>],
