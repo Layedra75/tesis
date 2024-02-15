@@ -1,80 +1,94 @@
 <main>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 text-center">
-                    <div class="card-body d-flex align-items-center justify-content-start">
-                        <i class="fa-solid fa-users fa-3x mr-3" style="margin-right: 80px;"></i>
-                        <div>
-                            <h5 class="card-title mb-0">Pacientes</h5>
-                            <p class="card-text">
-                                <%= numeroPacientes %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 text-center">
-                    <div class="card-body d-flex align-items-center justify-content-start">
-                        <i class="fa-regular fa-calendar-check fa-3x mr-3" style="margin-right: 80px;"></i>
-                        <div>
-                            <h5 class="card-title mb-0">Citas</h5>
-                            <p class="card-text">
-                                <%= numeroTotalDeCitas %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 text-center">
-                    <div class="card-body d-flex align-items-center justify-content-start">
-                        <i class="fa-solid fa-user fa-3x mr-3" style="margin-right: 80px;"></i>
-                        <div>
-                            <h5 class="card-title mb-0">Usuarios</h5>
-                            <p class="card-text">
-                                <%= numeroTotalDeUsuarios %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="container">
     <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Próximas Citas Médicas</h3>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table" id="proximasCitasTable">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Hora</th>
-                                    <th>Paciente</th>
-                                    <th>Doctor</th>
-                                    <th>Descripción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <% eventos.forEach(evento => { %>
-                                <tr>
-                                    <td><%= evento.fecha %></td>
-                                    <td><%= evento.hora %></td>
-                                    <td><%= evento.pacienteNombre %></td>
-                                    <td><%= evento.doctorNombre %></td>
-                                    <td><%= evento.descripcion %></td>
-                                </tr>
-                                <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 text-center">
+          <div
+            class="card-body d-flex align-items-center justify-content-start"
+          >
+            <i
+              class="fa-solid fa-users fa-3x mr-3"
+              style="margin-right: 80px"
+            ></i>
+            <div>
+              <h5 class="card-title mb-0">Pacientes</h5>
+              <p class="card-text"><%= numeroPacientes %></p>
             </div>
+          </div>
         </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 text-center">
+          <div
+            class="card-body d-flex align-items-center justify-content-start"
+          >
+            <i
+              class="fa-regular fa-calendar-check fa-3x mr-3"
+              style="margin-right: 80px"
+            ></i>
+            <div>
+              <h5 class="card-title mb-0">Citas</h5>
+              <p class="card-text"><%= numeroTotalDeCitas %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100 text-center">
+          <div
+            class="card-body d-flex align-items-center justify-content-start"
+          >
+            <i
+              class="fa-solid fa-user fa-3x mr-3"
+              style="margin-right: 80px"
+            ></i>
+            <div>
+              <h5 class="card-title mb-0">Usuarios</h5>
+              <p class="card-text"><%= numeroTotalDeUsuarios %></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3>Próximas Citas Médicas</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table" id="proximasCitasTable">
+              <thead>
+                <tr>
+                  <th>Fecha</th>
+                  <th>Hora</th>
+                  <th>Paciente</th>
+                  <th>Doctor</th>
+                  <th>Descripción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>22/02/2024</td>
+                  <td>12:00 pm</td>
+                  <td>Roberto Nicolas Soto</td>
+                  <td>Sebastian Jose Morales Lopez</td>
+                  <td>Revisión dental preventiva</td>
+                </tr>
+                <tr>
+                    <td>23/02/2024</td>
+                    <td>02:00pm</td>
+                    <td>Joel Sebastian Layedra Guevara</td>
+                    <td>Valentina Gabriela Cruz Ramirez</td>
+                    <td>Tratamiento dental programado</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
